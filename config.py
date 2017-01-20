@@ -12,10 +12,10 @@ sliceSize = 128
 
 # Dataset parameters
 filesPerGenre = 1000
-validationRatio = 0.3
-testRatio = 0.1
+validationRatio = 0.15
+testRatio = 0.05
 
 # Model parameters
 batchSize = 128
-learningRate = 0.001
-nbEpoch = 20
+learningRate = 0.01
+nbEpoch = 1000

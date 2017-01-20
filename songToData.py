@@ -3,9 +3,9 @@ import os
 from config import pixelPerSecond, rawDataPath, spectrogramsPath
 from subprocess import PIPE, STDOUT, Popen
 
+import eyed3
 from PIL import Image
 
-import eyed3
 from audioFilesTools import getGenre, isMono
 from sliceSpectrogram import createSlicesFromSpectrograms
 
@@ -35,7 +35,7 @@ def createSpectrogram(filename, newFilename):
 
     # Create spectrogram
     filename.replace(".mp3", "")
-    command = "sox '/tmp/{}.mp3' -n spectrogram -Y 200 -X {} -m -r -o '{}.png'".format(
+    command = "sox '/tmp/{}.mp3' -n spectrogram -Y 150 -X {} -h -r -o '{}.png'".format(
         newFilename, pixelPerSecond, spectrogramsPath + newFilename)
     p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE,
               stderr=STDOUT, close_fds=True, cwd=currentPath)

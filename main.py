@@ -10,7 +10,7 @@ from config import (batchSize, filesPerGenre, nbEpoch, sliceSize, slicesPath,
 import numpy as np
 
 from datasetTools import getDataset
-from model import createModel
+from model import createModelCifar
 from songToData import createSlicesFromAudio
 
 parser = argparse.ArgumentParser()
@@ -36,7 +36,7 @@ genres = [filename for filename in genres if os.path.isdir(slicesPath + filename
 nbClasses = len(genres)
 
 # Create model
-model = createModel(nbClasses, sliceSize)
+model = createModelCifar(nbClasses, sliceSize)
 
 if "train" in args.mode:
 
@@ -52,7 +52,7 @@ if "train" in args.mode:
     # Train the model
     print("[+] Training the model...")
     model.fit(train_X, train_y, n_epoch=nbEpoch, batch_size=batchSize, shuffle=True, validation_set=(
-        validation_X, validation_y), snapshot_step=100, show_metric=True, run_id=run_id)
+        validation_X, validation_y), snapshot_step=100, show_metric=True, snapshot_epoch=True, run_id=run_id)
     print("    Model trained! ✅")
 
     # Save trained model
@@ -68,7 +68,7 @@ if "test" in args.mode:
 
     # Load weights
     print("[+] Loading weights...")
-    model.load('musicDNN.tflearn')
+    model.load(os.getcwd() + '/model/model.tfl.cifar-100')
     print("    Weights loaded! ✅")
 
     testAccuracy = model.evaluate(test_X, test_y)[0]
