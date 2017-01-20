@@ -20,10 +20,10 @@ args = parser.parse_args()
 
 print("--------------------------")
 print("| ** Config ** ")
-print("| Validation ratio: {}".format(validationRatio))
-print("| Test ratio: {}".format(testRatio))
-print("| Slices per genre: {}".format(filesPerGenre))
-print("| Slice size: {}".format(sliceSize))
+print(("| Validation ratio: {}".format(validationRatio)))
+print(("| Test ratio: {}".format(testRatio)))
+print(("| Slices per genre: {}".format(filesPerGenre)))
+print(("| Slice size: {}".format(sliceSize)))
 print("--------------------------")
 
 if "slice" in args.mode:
@@ -72,4 +72,4 @@ if "test" in args.mode:
     print("    Weights loaded! ✅")
 
     testAccuracy = model.evaluate(test_X, test_y)[0]
-    print("[+] Test accuracy: {} ".format(testAccuracy))
+    print(("[+] Test accuracy: {} ".format(testAccuracy)))

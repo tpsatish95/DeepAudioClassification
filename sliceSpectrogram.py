@@ -24,22 +24,20 @@ def sliceSpectrogram(filename, desiredSize):
     img = Image.open(spectrogramsPath + filename)
 
     # Compute approximate number of 128x128 samples
-    width, height = img.size
+    width, _ = img.size
     nbSamples = int(width / desiredSize)
-    width - desiredSize
 
     # Create path if not existing
     slicePath = slicesPath + "{}/".format(genre)
     if not os.path.exists(os.path.dirname(slicePath)):
         try:
             os.makedirs(os.path.dirname(slicePath))
-        except OSError as exc:  # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raise
+        except OSError:  # Guard against race condition
+            print("Slice Spectrogram directory already exists")
 
     # For each sample
     for i in range(nbSamples):
-        print "Creating slice: ", (i + 1), "/", nbSamples, "for", filename
+        print(("Creating slice: " + str((i + 1)) + "/" + str(nbSamples) + "for" + filename))
         # Extract and save 128x128 sample
         startPixel = i * desiredSize
         imgTmp = img.crop((startPixel, 1, startPixel + desiredSize, desiredSize + 1))

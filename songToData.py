@@ -31,7 +31,7 @@ def createSpectrogram(filename, newFilename):
               stderr=STDOUT, close_fds=True, cwd=currentPath)
     output, errors = p.communicate()
     if errors:
-        print errors
+        print(errors)
 
     # Create spectrogram
     filename.replace(".mp3", "")
@@ -41,7 +41,7 @@ def createSpectrogram(filename, newFilename):
               stderr=STDOUT, close_fds=True, cwd=currentPath)
     output, errors = p.communicate()
     if errors:
-        print errors
+        print(errors)
 
     # Remove tmp mono track
     os.remove("/tmp/{}.mp3".format(newFilename))
@@ -60,12 +60,11 @@ def createSpectrogramsFromAudio():
         try:
             os.makedirs(os.path.dirname(spectrogramsPath))
         except OSError as exc:  # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raise
+            print("Spectrograms directory already exists")
 
     # Rename files according to genre
     for index, filename in enumerate(files):
-        print "Creating spectrogram for file {}/{}...".format(index + 1, nbFiles)
+        print(("Creating spectrogram for file {}/{}...".format(index + 1, nbFiles)))
         fileGenre = getGenre(rawDataPath + filename)
         genresID[fileGenre] = genresID[fileGenre] + 1 if fileGenre in genresID else 1
         fileID = genresID[fileGenre]
@@ -76,10 +75,10 @@ def createSpectrogramsFromAudio():
 
 
 def createSlicesFromAudio():
-    print "Creating spectrograms..."
+    print("Creating spectrograms...")
     createSpectrogramsFromAudio()
-    print "Spectrograms created!"
+    print("Spectrograms created!")
 
-    print "Creating slices..."
+    print("Creating slices...")
     createSlicesFromSpectrograms(desiredSize)
-    print "Slices created!"
+    print("Slices created!")

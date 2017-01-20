@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import absolute_import, division, print_function
 
 import os
@@ -22,7 +21,7 @@ def getDatasetName(nbPerGenre, sliceSize):
     return name
 
 # Creates or loads dataset if it exists
-#Mode = "train" or "test"
+# Mode = "train" or "test"
 
 
 def getDataset(nbPerGenre, genres, sliceSize, validationRatio, testRatio, mode):
@@ -36,7 +35,7 @@ def getDataset(nbPerGenre, genres, sliceSize, validationRatio, testRatio, mode):
     return loadDataset(nbPerGenre, genres, sliceSize, mode)
 
 # Loads dataset
-#Mode = "train" or "test"
+# Mode = "train" or "test"
 
 
 def loadDataset(nbPerGenre, genres, sliceSize, mode):
@@ -64,13 +63,12 @@ def loadDataset(nbPerGenre, genres, sliceSize, mode):
 
 
 def saveDataset(train_X, train_y, validation_X, validation_y, test_X, test_y, nbPerGenre, genres, sliceSize):
-     # Create path for dataset if not existing
+    # Create path for dataset if not existing
     if not os.path.exists(os.path.dirname(datasetPath)):
         try:
             os.makedirs(os.path.dirname(datasetPath))
-        except OSError as exc:  # Guard against race condition
-            if exc.errno != errno.EEXIST:
-                raise
+        except OSError:  # Guard against race condition
+            print("Dataset directory already exists")
 
     # SaveDataset
     print("[+] Saving dataset... ")
@@ -107,7 +105,7 @@ def createDatasetFromSlices(nbPerGenre, genres, sliceSize, validationRatio, test
     shuffle(data)
 
     # Extract X and y
-    X, y = zip(*data)
+    X, y = list(zip(*data))
 
     # Split data
     validationNb = int(len(X) * validationRatio)
